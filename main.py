@@ -2,10 +2,24 @@ import streamlit as st
 import definitions as defi
 import matplotlib.pyplot as plt
 
+station_list = ('PSZCZYNA', 'BRENNA', 'JAB£ONKA', 'POLANA CHOCHO£OWSKA',
+       'RADZIECHOWY', '£AZY', 'JASTRZÊBIA', 'LIMANOWA', '£¥CKO',
+       'KRO\x8cCIENKO', 'NIEDZICA', 'BUKOWINA TATRZAÑSKA',
+       'DOLINA PIÊCIU STAWÓW', 'PIWNICZNA', 'PORONIN', 'MSZANA DOLNA',
+       'DYNÓW', 'SOLINA-JAWOR', 'KOMAÑCZA', 'DRONIOWICE', 'LGOTA GÓRNA',
+       'KRAKÓW-OBSERWATORIUM', 'BORUSOWA', '\x8cWIÊTY KRZY¯', 'STASZÓW',
+       'JAROCIN', 'CIESZANÓW', 'STRZY¯ÓW', 'CEBER', 'RADZYÑ', 'PUCZNIEW',
+       'SKIERNIEWICE', 'JARCZEW', 'PU£AWY', 'GORZYÑ', 'BABIMOST',
+       'WIELICHOWO', 'KO£UDA WIELKA', 'LEGIONOWO', 'WARSZAWA-BIELANY',
+       'WARSZAWA-FILTRY', 'PU£TUSK', 'WARSZAWA-OBSERWATORIUM II',
+       'SZEPIETOWO', 'BIA£OWIE¯A', 'GOLENIÓW', 'CHRZ¥STOWO',
+       'BIEBRZA-PIEÑCZYKÓWEK', 'MARIANOWO II', 'RÓ¯ANYSTOK',
+       'GDAÑSK-RÊBIECHOWO', 'LIDZBARK WARMIÑSKI', 'OLECKO')
+
 st.title('Weather data during years')
-year = st.slider('Select year', min_value=2001, max_value=2023, help='description')
+year = st.slider('Select year', min_value=2001, max_value=2023, help='select year between 2001 and 2023')
 month = st.slider('Select month', min_value=1, max_value=12)
-station = st.selectbox('Select station', ('PSZCZYNA', 'BRENNA', 'LALIKI'))
+station = st.selectbox('Select station', station_list)
 st.subheader(f'Information for {station}, {month}.{year}')
 
 df1 = defi.import_extract(year, month)
@@ -63,4 +77,7 @@ fig1 = plt.gcf()
 fig1.savefig('static/chart.png')
 image_url = 'static/chart.png'
 
+st.write(f'Temperature max: {max}')
+st.write(f'Temperature min: {min}')
+st.write(f'Rainfall total: {rain}')
 st.image(image_url)
