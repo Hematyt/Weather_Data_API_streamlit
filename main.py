@@ -1,6 +1,7 @@
 import streamlit as st
 import definitions as defi
 import matplotlib.pyplot as plt
+import pandas as pd
 
 station_list = ('PSZCZYNA', 'BRENNA', 'JAB£ONKA', 'POLANA CHOCHO£OWSKA',
        'RADZIECHOWY', '£AZY', 'JASTRZÊBIA', 'LIMANOWA', '£¥CKO',
@@ -81,3 +82,36 @@ st.write(f'Temperature max: {max}')
 st.write(f'Temperature min: {min}')
 st.write(f'Rainfall total: {rain}')
 st.image(image_url)
+
+data_all = pd.read_csv('static/df_all.csv')
+one_station_months = data_all[data_all['station name'] == station]
+one_station_months = one_station_months[one_station_months['month'] == month].groupby(by='day').agg({'temp_avg':['max','min']})
+
+fig, ax = plt.subplots(figsize=(12, 7))
+ax.fill_between(
+    one_station_months.index, one_station_months['temp_avg','min'], one_station_months['temp_avg','max'],
+    color='lightgrey',
+    alpha=0.3,
+    label='2001-2023'
+)
+
+ax.plot(
+    one_station['day'], one_station['temp_avg'],
+    color='black',
+    label=f'{month}.{year}',
+    alpha=0.5
+)
+
+ax.axhline(0, c='grey', ls='--')
+ax.set_xlim(0)
+
+ax.set_title(f'Average temperatures in comparison to 2001-2023', fontsize=14, x=0.16)
+ax.set_xlabel('Day', fontsize=10)
+ax.set_ylabel('Temperature', fontsize=10)
+
+ax.legend(frameon=False)
+
+fig2 = plt.gcf()
+fig2.savefig('static/chart2.png')
+image_url2 = 'static/chart2.png'
+st.image(image_url2)
