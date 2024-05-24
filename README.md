@@ -5,3 +5,8 @@ Archival Weather Data from Polish stations.
 The application is using streamlit.
 
 Data source: https://danepubliczne.imgw.pl
+
+Libraries:
+* Pandas
+* Matplotlib
+* Streamlit

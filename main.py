@@ -4,7 +4,7 @@ import streamlit as st
 import definitions
 import charts
 
-st.title('Weather data during years')
+st.title('Polish weather data during years')
 year = st.slider('Select year', min_value=2001, max_value=2023, help='select year between 2001 and 2023')
 month = st.slider('Select month', min_value=1, max_value=12)
 station = st.selectbox('Select station', definitions.station_list)
@@ -20,6 +20,6 @@ if st.button('Submit'):
        st.write(f'Temperature min: {tmin} [C]')
        st.write(f'Rainfall total: {train} [mm]')
 
-       st.image(charts.chart1(df, year))
-       # st.image(charts.chart2(df, month, year, station))
-       # st.image(charts.chart2(df, month, year, station))
+       st.image(charts.chart1(df, year, month))
+       st.image(charts.chart2(df, year, month))
+       st.image(charts.chart3(df, year, month))
